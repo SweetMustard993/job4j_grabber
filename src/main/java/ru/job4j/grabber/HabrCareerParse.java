@@ -17,7 +17,6 @@ public class HabrCareerParse implements DateTimeParser {
 
     private static final String PAGE_LINK = String.format("%s/vacancies/java_developer", SOURCE_LINK);
 
-
     public static void main(String[] args) throws IOException {
         HabrCareerParse hcp = new HabrCareerParse();
         Connection connection = Jsoup.connect(PAGE_LINK);
