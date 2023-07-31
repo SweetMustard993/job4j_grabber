@@ -67,11 +67,11 @@ public class Post {
             return false;
         }
         Post post = (Post) o;
-        return title.equals(post.title) && link.equals(post.link) && description.equals(post.description) && created.equals(post.created);
+        return title.equals(post.title) && description.equals(post.description) && created.equals(post.created);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, link, description, created);
+        return Objects.hash(title, description, created);
     }
 }
