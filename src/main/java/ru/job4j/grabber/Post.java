@@ -18,6 +18,18 @@ public class Post {
         this.created = created;
     }
 
+    public Post() {
+    }
+
+    public static Post of(String title, String link, String description, LocalDateTime created) {
+        Post post = new Post();
+        post.setTitle(title);
+        post.setLink(link);
+        post.setDescription(description);
+        post.setCreated(created);
+        return post;
+    }
+
     public int getId() {
         return id;
     }
