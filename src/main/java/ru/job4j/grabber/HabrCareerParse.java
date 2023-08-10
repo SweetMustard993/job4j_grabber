@@ -58,7 +58,7 @@ public class HabrCareerParse implements Parse {
                 String postLink = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
                 String postDescription = null;
                 try {
-                    postDescription = retrieveDescription(link);
+                    postDescription = retrieveDescription(postLink);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -67,10 +67,4 @@ public class HabrCareerParse implements Parse {
         }
         return posts;
     }
-
-    public static void main(String[] args) {
-        HabrCareerParse hcp = new HabrCareerParse(new HabrCareerDateTimeParser());
-        List<Post> posts = hcp.list(PAGE_LINK);
-    }
-
 }
