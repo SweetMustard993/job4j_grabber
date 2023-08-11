@@ -27,16 +27,6 @@ public class PsqlStore implements Store {
         }
     }
 
-    public static Properties loadProperties() {
-        Properties properties = new Properties();
-        try (InputStream in = new FileInputStream("src/main/resources/grabber.properties")) {
-            properties.load(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return properties;
-    }
-
     @Override
     public void close() throws SQLException {
         if (cnn != null) {
