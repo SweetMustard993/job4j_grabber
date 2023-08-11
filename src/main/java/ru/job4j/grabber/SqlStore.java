@@ -49,10 +49,10 @@ public class SqlStore implements AutoCloseable, Store {
 
     @Override
     public void save(Post post) {
-        try (PreparedStatement statement = cn.prepareStatement("INSERT INTO grabber.posts(tittle, link, description, created) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = cn.prepareStatement("INSERT INTO grabber.post(name, text, link, created) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, post.getTitle());
-            statement.setString(2, post.getLink());
-            statement.setString(3, post.getDescription());
+            statement.setString(2, post.getDescription());
+            statement.setString(3, post.getLink());
             Timestamp timestamp = Timestamp.valueOf(post.getCreated());
             statement.setTimestamp(4, timestamp);
             statement.execute();
@@ -69,9 +69,9 @@ public class SqlStore implements AutoCloseable, Store {
 
     private Post postOf(ResultSet resultSet) throws SQLException {
         return new Post(resultSet.getInt("id"),
-                resultSet.getString("title"),
+                resultSet.getString("name"),
+                resultSet.getString("text"),
                 resultSet.getString("link"),
-                resultSet.getString("description"),
                 resultSet.getTimestamp("created").toLocalDateTime());
     }
 
@@ -79,7 +79,7 @@ public class SqlStore implements AutoCloseable, Store {
     public List<Post> getAll() {
         List<Post> posts = new ArrayList<>();
         try (Statement statement = cn.createStatement()) {
-            String sql = "SELECT * FROM grabber.posts";
+            String sql = "SELECT * FROM grabber.post";
             try (ResultSet resultSet = statement.executeQuery(sql)) {
                 while (resultSet.next()) {
                     posts.add(postOf(resultSet));
@@ -94,7 +94,7 @@ public class SqlStore implements AutoCloseable, Store {
     @Override
     public Post findById(int id) {
         Post res = null;
-        try (PreparedStatement statement = cn.prepareStatement("SELECT * FROM grabber.posts WHERE id = (?)")) {
+        try (PreparedStatement statement = cn.prepareStatement("SELECT * FROM grabber.post WHERE id = (?)")) {
             statement.setInt(1, id);
             statement.execute();
             try (ResultSet resultSet = statement.getResultSet()) {
