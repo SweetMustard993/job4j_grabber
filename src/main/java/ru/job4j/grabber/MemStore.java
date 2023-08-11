@@ -35,4 +35,9 @@ public class MemStore implements Store {
         int index = indexOf(id);
         return index != -1 ? posts.get(index) : null;
     }
+
+    @Override
+    public void close() throws Exception {
+
+    }
 }

@@ -21,10 +21,10 @@ public class GrabHabrCareer implements Grab {
     private static final String PROPERTIES = "src/main/resources/grabber.properties";
     private static final String INTERVAL = "grabber.interval";
 
-    private final SqlStore dbStore;
+    private final PsqlStore dbStore;
     private final HabrCareerParse habrCareerParse;
 
-    public GrabHabrCareer(SqlStore dbStore, HabrCareerParse habrCareerParse) {
+    public GrabHabrCareer(PsqlStore dbStore, HabrCareerParse habrCareerParse) {
         this.dbStore = dbStore;
         this.habrCareerParse = habrCareerParse;
     }
@@ -83,7 +83,7 @@ public class GrabHabrCareer implements Grab {
     }
 
     public static void main(String[] args) {
-        Grab habr = new GrabHabrCareer(new SqlStore(), new HabrCareerParse(new HabrCareerDateTimeParser()));
+        Grab habr = new GrabHabrCareer(new PsqlStore(loadProperties()), new HabrCareerParse(new HabrCareerDateTimeParser()));
         try {
             habr.init();
         } catch (SchedulerException e) {
