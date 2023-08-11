@@ -17,18 +17,6 @@
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
-  <profiles>
-    <profile>
-      <id>production</id>
-      <properties>
-        <liquibase.config>src/main/resources/db/liquibase.properties</liquibase.config>
-      </properties>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-    </profile>
-  </profiles>
-
   <dependencies>
     <dependency>
       <groupId>org.jsoup</groupId>
@@ -71,23 +59,6 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.liquibase</groupId>
-        <artifactId>liquibase-maven-plugin</artifactId>
-        <version>4.15.0</version>
-        <configuration>
-          <propertyFile>${liquibase.config}</propertyFile>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>clearCheckSums</goal>
-              <goal>update</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
