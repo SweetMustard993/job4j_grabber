@@ -20,9 +20,10 @@ public class MemStore implements Store {
     }
 
     @Override
-    public void save(Post post) {
+    public Post save(Post post) {
         post.setId(ids++);
         posts.add(post);
+        return post;
     }
 
     @Override

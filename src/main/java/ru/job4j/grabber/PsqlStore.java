@@ -35,7 +35,7 @@ public class PsqlStore implements Store {
     }
 
     @Override
-    public void save(Post post) {
+    public Post save(Post post) {
         try (PreparedStatement statement = cnn.prepareStatement("INSERT INTO grabber.post(name, text, link, created)"
                 + " VALUES (?, ?, ?, ?)"
                 + "ON CONFLICT (link)"
@@ -46,9 +46,15 @@ public class PsqlStore implements Store {
             Timestamp timestamp = Timestamp.valueOf(post.getCreated());
             statement.setTimestamp(4, timestamp);
             statement.execute();
+            try (ResultSet generatedId = statement.getGeneratedKeys()) {
+                if (generatedId.next()) {
+                    post.setId(generatedId.getInt(1));
+                }
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return post;
     }
 
     private Post postOf(ResultSet resultSet) throws SQLException {
