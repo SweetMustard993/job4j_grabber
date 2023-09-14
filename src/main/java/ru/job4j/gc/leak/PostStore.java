@@ -11,7 +11,6 @@ public class PostStore {
 
     public Post add(Post post) {
         Integer id = atomicInteger.getAndIncrement();
-        post.setId(id);
         posts.put(id, post);
         return post;
     }
