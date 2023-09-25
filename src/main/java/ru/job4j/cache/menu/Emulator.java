@@ -4,22 +4,28 @@ import ru.job4j.cache.DirFileCache;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Emulator {
 
     private final Scanner in;
 
+    private final String menuText;
+
     public Emulator(Scanner in) {
         this.in = in;
+        String sep = System.lineSeparator();
+        menuText = "Выберите действие номер действия:" + sep + "1.Прочитать из кэша" + sep + "2.Добавить в кэш"
+                + sep + "3.Выйти из программы";
     }
 
     public void init() {
         String dir = askDir();
-        DirFileCache fileCache = new DirFileCache(dir);
+        final DirFileCache fileCache = new DirFileCache(dir);
         boolean run = true;
         while (run) {
-            showMenu();
+            System.out.println(menuText);
             String action = in.nextLine();
             if (action.length() > 1) {
                 System.out.println("Введено не верное значение.");
@@ -62,7 +68,7 @@ public class Emulator {
         while (invalid) {
             System.out.println("Укажите путь директории для кэширования:");
             dir = in.nextLine();
-            Path dirPath = Path.of(dir);
+            Path dirPath = Paths.get(dir);
             if (!dirPath.isAbsolute()) {
                 System.out.println("Указанный текст не является путем.");
                 continue;
@@ -71,18 +77,14 @@ public class Emulator {
                 System.out.println("Указанный путь не является директорией.");
                 continue;
             }
+            System.out.println("Установлена директория: " + dirPath.normalize());
             invalid = false;
         }
         return dir;
     }
 
-    private void showMenu() {
-        String sep = System.lineSeparator();
-        String menu = "Выберите действие номер действия:" + sep + "1.Прочитать из кэша" + sep + "2.Добавить в кэш"
-                + sep + " 3.Выйти из программы";
-    }
-
     public static void main(String[] args) {
-
+        Emulator emulatorDirFileCache = new Emulator(new Scanner(System.in));
+        emulatorDirFileCache.init();
     }
 }
