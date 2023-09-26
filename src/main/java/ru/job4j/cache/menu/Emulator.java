@@ -16,7 +16,7 @@ public class Emulator {
     public Emulator(Scanner in) {
         this.in = in;
         String sep = System.lineSeparator();
-        menuText = "Выберите действие номер действия:" + sep + "1.Прочитать из кэша" + sep + "2.Добавить в кэш"
+        menuText = "Выберите номер действия:" + sep + "1.Прочитать из кэша" + sep + "2.Добавить в кэш"
                 + sep + "3.Выйти из программы";
     }
 
